@@ -1,0 +1,247 @@
+{
+    "$schema": "./agents.schema.json",
+    "version": "1.0.0",
+    "description": "AI agent configurations for the Ignite monorepo template",
+    "agents": [
+        {
+            "id": "feature-generator",
+            "name": "Feature Generator",
+            "description": "Creates complete feature packages with tRPC routers, database schemas, tests, and configuration",
+            "prompt": "./agents/feature-generator.md",
+            "triggers": [
+                "create feature",
+                "new feature",
+                "add feature",
+                "create module",
+                "new module",
+                "add CRUD",
+                "create package"
+            ],
+            "tools": ["Read", "Write", "Edit", "Glob", "Grep", "Bash"],
+            "priority": 1,
+            "autoTrigger": true
+        },
+        {
+            "id": "schema-builder",
+            "name": "Schema Builder",
+            "description": "Creates and modifies Drizzle ORM database schemas with proper types, constraints, and relationships",
+            "prompt": "./agents/schema-builder.md",
+            "triggers": [
+                "add table",
+                "create table",
+                "new table",
+                "create schema",
+                "add schema",
+                "database table",
+                "add column",
+                "modify schema"
+            ],
+            "tools": ["Read", "Write", "Edit", "Glob", "Bash"],
+            "priority": 2,
+            "autoTrigger": true
+        },
+        {
+            "id": "test-runner",
+            "name": "Test Runner",
+            "description": "Runs tests, analyzes failures, and fixes issues to ensure all tests pass",
+            "prompt": "./agents/test-runner.md",
+            "triggers": [
+                "run tests",
+                "fix tests",
+                "test failing",
+                "tests broken",
+                "debug test",
+                "test error"
+            ],
+            "tools": ["Read", "Edit", "Bash", "Grep"],
+            "priority": 2,
+            "autoTrigger": true
+        },
+        {
+            "id": "e2e-tester",
+            "name": "E2E Tester",
+            "description": "Creates and runs end-to-end tests that verify complete user flows across the full stack",
+            "prompt": "./agents/e2e-tester.md",
+            "triggers": [
+                "e2e test",
+                "end to end",
+                "integration test",
+                "full flow test",
+                "user flow test",
+                "api test"
+            ],
+            "tools": ["Read", "Write", "Edit", "Bash", "Grep"],
+            "priority": 3,
+            "autoTrigger": false
+        },
+        {
+            "id": "api-reviewer",
+            "name": "API Reviewer",
+            "description": "Reviews tRPC router implementations for best practices, security, and proper typing",
+            "prompt": "./agents/api-reviewer.md",
+            "triggers": [
+                "review router",
+                "review api",
+                "check api",
+                "validate endpoints",
+                "api security",
+                "router review"
+            ],
+            "tools": ["Read", "Grep", "Glob"],
+            "priority": 4,
+            "autoTrigger": false
+        },
+        {
+            "id": "dependency-checker",
+            "name": "Dependency Checker",
+            "description": "Validates package dependencies, detects circular imports, and ensures architectural integrity",
+            "prompt": "./agents/dependency-checker.md",
+            "triggers": [
+                "check deps",
+                "check dependencies",
+                "circular",
+                "dependency issue",
+                "import error",
+                "validate architecture"
+            ],
+            "tools": ["Read", "Glob", "Grep", "Bash"],
+            "priority": 4,
+            "autoTrigger": false
+        },
+        {
+            "id": "frontend-component",
+            "name": "Frontend Component",
+            "description": "Creates React components with proper patterns, tRPC integration, and Tailwind styling",
+            "prompt": "./agents/frontend-component.md",
+            "triggers": [
+                "create component",
+                "new component",
+                "add screen",
+                "create page",
+                "frontend",
+                "ui component",
+                "react component"
+            ],
+            "tools": ["Read", "Write", "Edit", "Glob"],
+            "priority": 2,
+            "autoTrigger": true
+        },
+        {
+            "id": "auth-helper",
+            "name": "Auth Helper",
+            "description": "Implements authentication and authorization features with proper security patterns",
+            "prompt": "./agents/auth-helper.md",
+            "triggers": [
+                "auth",
+                "authentication",
+                "authorization",
+                "login",
+                "protected",
+                "permission",
+                "session",
+                "role"
+            ],
+            "tools": ["Read", "Write", "Edit", "Grep"],
+            "priority": 3,
+            "autoTrigger": false
+        },
+        {
+            "id": "code-quality",
+            "name": "Code Quality",
+            "description": "Formats code, runs linting, and fixes code quality issues",
+            "prompt": "./agents/code-quality.md",
+            "triggers": [
+                "format",
+                "lint",
+                "clean up",
+                "fix style",
+                "code quality",
+                "prettier",
+                "biome"
+            ],
+            "tools": ["Bash", "Read", "Edit", "Grep"],
+            "priority": 5,
+            "autoTrigger": false
+        },
+        {
+            "id": "documentation-sync",
+            "name": "Documentation Sync",
+            "description": "Keeps documentation in sync with code changes",
+            "prompt": "./agents/documentation-sync.md",
+            "triggers": [
+                "update docs",
+                "sync docs",
+                "documentation",
+                "update readme",
+                "docs out of date"
+            ],
+            "tools": ["Read", "Write", "Edit", "Glob", "Grep"],
+            "priority": 5,
+            "autoTrigger": false
+        }
+    ],
+    "workflows": [
+        {
+            "id": "new-feature-workflow",
+            "name": "Complete Feature Development",
+            "description": "Full workflow for creating a new feature from scratch",
+            "steps": [
+                {
+                    "agent": "feature-generator",
+                    "description": "Create feature package structure, router, and tests"
+                },
+                {
+                    "agent": "test-runner",
+                    "description": "Run tests and fix any issues"
+                },
+                {
+                    "agent": "code-quality",
+                    "description": "Format and lint the new code"
+                },
+                {
+                    "agent": "documentation-sync",
+                    "description": "Update documentation if needed"
+                }
+            ]
+        },
+        {
+            "id": "code-review-workflow",
+            "name": "Code Review",
+            "description": "Review code for quality and best practices",
+            "steps": [
+                {
+                    "agent": "api-reviewer",
+                    "description": "Review API implementation"
+                },
+                {
+                    "agent": "dependency-checker",
+                    "description": "Check for dependency issues"
+                },
+                {
+                    "agent": "code-quality",
+                    "description": "Check formatting and linting"
+                }
+            ]
+        },
+        {
+            "id": "test-workflow",
+            "name": "Comprehensive Testing",
+            "description": "Run all types of tests",
+            "steps": [
+                {
+                    "agent": "test-runner",
+                    "description": "Run unit tests"
+                },
+                {
+                    "agent": "e2e-tester",
+                    "description": "Run E2E tests"
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "defaultTimeout": 300000,
+        "maxConcurrentAgents": 3,
+        "logLevel": "info"
+    }
+}

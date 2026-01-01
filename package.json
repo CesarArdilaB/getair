@@ -1,0 +1,22 @@
+{
+    "name": "@robot.com/ignition-template",
+    "type": "module",
+    "scripts": {
+        "dev": "dotenv concurrently \"pnpm --filter web dev\" \"pnpm --filter server dev\"",
+        "db:push": "dotenv -- pnpm --filter @shared/database db:push",
+        "test": "dotenv -- pnpm run -r test",
+        "format": "pnpm dlx @biomejs/biome check --write --unsafe",
+        "lint": "tsc -b"
+    },
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "shared/*"
+    ],
+    "devDependencies": {
+        "@biomejs/biome": "2.2.4",
+        "concurrently": "^9.2.1",
+        "dotenv-cli": "^10.0.0",
+        "typescript": "^5.9.2"
+    }
+}

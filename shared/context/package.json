@@ -1,0 +1,16 @@
+{
+    "name": "@shared/context",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./testing": "./src/testing.ts"
+    },
+    "dependencies": {
+        "@shared/auth": "workspace:*",
+        "@shared/database": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "^24.3.1"
+    }
+}

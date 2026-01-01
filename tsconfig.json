@@ -1,0 +1,75 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "declaration": true,
+        "declarationDir": "lib",
+        "declarationMap": true,
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "moduleDetection": "force",
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "noImplicitOverride": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noUncheckedIndexedAccess": true,
+        "sourceMap": true,
+        "noEmit": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "isolatedModules": true,
+        "jsx": "react-jsx",
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "module": "esnext",
+        "target": "ESNext"
+    },
+    "files": [],
+    "references": [
+        {
+            "path": "apps/web"
+        },
+        {
+            "path": "apps/server"
+        },
+        {
+            "path": "apps/mobile"
+        },
+        {
+            "path": "shared/api"
+        },
+        {
+            "path": "shared/lib"
+        },
+        {
+            "path": "shared/components"
+        },
+        {
+            "path": "shared/context"
+        },
+        {
+            "path": "shared/api-helpers"
+        },
+        {
+            "path": "shared/database"
+        },
+        {
+            "path": "shared/auth"
+        },
+        {
+            "path": "packages/posts"
+        },
+        {
+            "path": "packages/cms"
+        },
+        {
+            "path": "apps/cms"
+        }
+    ]
+}

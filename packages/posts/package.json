@@ -1,0 +1,23 @@
+{
+    "name": "@packages/posts",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "test": "tsx --test src/tests/**/*.test.ts"
+    },
+    "dependencies": {
+        "@shared/api-helpers": "workspace:*",
+        "@shared/context": "workspace:*",
+        "@shared/database": "workspace:*"
+    },
+    "devDependencies": {
+        "tsx": "^4.20.5"
+    },
+    "peerDependencies": {
+        "drizzle-orm": "0.x",
+        "zod": ">=3.0.0"
+    }
+}

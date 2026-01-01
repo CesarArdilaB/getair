@@ -1,0 +1,11 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "src",
+        "paths": {
+            "@shared/components": ["./src/index.ts"],
+            "@shared/components/*": ["./src/*"]
+        }
+    },
+    "include": ["src"]
+}

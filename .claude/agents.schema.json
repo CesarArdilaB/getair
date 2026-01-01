@@ -1,0 +1,166 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Ignite Agents Configuration",
+    "description": "Configuration schema for AI agents in the Ignite monorepo",
+    "type": "object",
+    "required": ["version", "agents"],
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "description": "JSON Schema reference"
+        },
+        "version": {
+            "type": "string",
+            "description": "Configuration version",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "description": {
+            "type": "string",
+            "description": "Description of the agents configuration"
+        },
+        "agents": {
+            "type": "array",
+            "description": "List of available agents",
+            "items": {
+                "$ref": "#/definitions/Agent"
+            }
+        },
+        "workflows": {
+            "type": "array",
+            "description": "Predefined agent workflows",
+            "items": {
+                "$ref": "#/definitions/Workflow"
+            }
+        },
+        "settings": {
+            "$ref": "#/definitions/Settings"
+        }
+    },
+    "definitions": {
+        "Agent": {
+            "type": "object",
+            "required": ["id", "name", "description", "prompt", "tools"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the agent",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Human-readable name for the agent"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Brief description of what the agent does"
+                },
+                "prompt": {
+                    "type": "string",
+                    "description": "Path to the agent's prompt file (relative to .claude/)"
+                },
+                "triggers": {
+                    "type": "array",
+                    "description": "Keywords or phrases that trigger this agent",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tools": {
+                    "type": "array",
+                    "description": "List of tools the agent can use",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Read",
+                            "Write",
+                            "Edit",
+                            "Glob",
+                            "Grep",
+                            "Bash",
+                            "WebFetch",
+                            "WebSearch"
+                        ]
+                    }
+                },
+                "priority": {
+                    "type": "integer",
+                    "description": "Priority level (1 = highest)",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "default": 5
+                },
+                "autoTrigger": {
+                    "type": "boolean",
+                    "description": "Whether the agent can be automatically triggered",
+                    "default": false
+                }
+            }
+        },
+        "Workflow": {
+            "type": "object",
+            "required": ["id", "name", "steps"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the workflow",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Human-readable name for the workflow"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of what the workflow accomplishes"
+                },
+                "steps": {
+                    "type": "array",
+                    "description": "Ordered list of agent steps",
+                    "items": {
+                        "$ref": "#/definitions/WorkflowStep"
+                    }
+                }
+            }
+        },
+        "WorkflowStep": {
+            "type": "object",
+            "required": ["agent"],
+            "properties": {
+                "agent": {
+                    "type": "string",
+                    "description": "Agent ID to execute"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of this step"
+                },
+                "condition": {
+                    "type": "string",
+                    "description": "Optional condition for executing this step"
+                }
+            }
+        },
+        "Settings": {
+            "type": "object",
+            "properties": {
+                "defaultTimeout": {
+                    "type": "integer",
+                    "description": "Default timeout in milliseconds",
+                    "default": 300000
+                },
+                "maxConcurrentAgents": {
+                    "type": "integer",
+                    "description": "Maximum number of agents that can run concurrently",
+                    "minimum": 1,
+                    "default": 3
+                },
+                "logLevel": {
+                    "type": "string",
+                    "description": "Logging level",
+                    "enum": ["debug", "info", "warn", "error"],
+                    "default": "info"
+                }
+            }
+        }
+    }
+}

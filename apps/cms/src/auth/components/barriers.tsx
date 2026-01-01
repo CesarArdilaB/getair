@@ -1,0 +1,50 @@
+import { Center, Spinner } from '@shared/components/custom'
+import { Navigate, useLocation } from 'react-router'
+import { useCallbackURL, useSession } from '@/auth/hooks'
+
+export function AuthLoading() {
+    return (
+        <Center>
+            <Spinner />
+        </Center>
+    )
+}
+
+export function AuthBarrier(props: { children?: React.ReactNode }) {
+    const auth = useSession()
+
+    const location = useLocation()
+
+    if (auth === undefined) {
+        return <AuthLoading />
+    }
+
+    if (auth === null) {
+        return (
+            <Navigate
+                to={{
+                    pathname: '/login',
+                    search: `?redirect=${encodeURIComponent(location.pathname)}`,
+                }}
+            />
+        )
+    }
+
+    return <>{props.children}</>
+}
+
+export function NoAuthBarrier(props: { children?: React.ReactNode }) {
+    const auth = useSession()
+
+    const callbackURL = useCallbackURL()
+
+    if (auth === undefined) {
+        return <AuthLoading />
+    }
+
+    if (auth) {
+        return <Navigate to={callbackURL} />
+    }
+
+    return <>{props.children}</>
+}

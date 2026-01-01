@@ -1,0 +1,17 @@
+{
+    "name": "@shared/api-helpers",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "@shared/context": "workspace:*",
+        "@shared/database": "workspace:*",
+        "@trpc/server": "^11.5.1",
+        "superjson": "^2.2.2"
+    },
+    "peerDependencies": {
+        "drizzle-orm": "0.x"
+    }
+}

@@ -17,7 +17,16 @@ config.resolver.nodeModulesPaths = [
     path.resolve(monorepoRoot, 'node_modules'),
 ]
 
-// 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
+// 3. Map workspace packages to their actual locations
+// This ensures Metro can find @shared/* and @packages/* packages
+config.resolver.extraNodeModules = {
+    '@shared/api': path.resolve(monorepoRoot, 'shared/api'),
+    '@shared/auth': path.resolve(monorepoRoot, 'shared/auth'),
+    '@shared/lib': path.resolve(monorepoRoot, 'shared/lib'),
+    '@packages/posts': path.resolve(monorepoRoot, 'packages/posts'),
+}
+
+// 4. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
 config.resolver.disableHierarchicalLookup = true
 
 module.exports = withNativeWind(config, { input: './src/global.css' })

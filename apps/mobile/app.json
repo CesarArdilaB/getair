@@ -1,28 +1,33 @@
 {
     "expo": {
-        "name": "Ignite",
-        "slug": "ignite",
+        "name": "Air",
+        "slug": "air",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
-        "scheme": "ignite",
+        "scheme": "air",
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.ignite.app"
+            "bundleIdentifier": "com.getair.app"
         },
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
             },
-            "package": "com.ignite.app"
+            "package": "com.getair.app"
         },
         "web": {
             "bundler": "metro",
             "output": "static",
-            "favicon": "./assets/images/favicon.png"
+            "favicon": "./assets/images/favicon.png",
+            "name": "Air - Budget Tracker",
+            "shortName": "Air",
+            "description": "Track your budget without judgment",
+            "themeColor": "#0284c7",
+            "backgroundColor": "#ffffff"
         },
         "plugins": [
             "expo-router",

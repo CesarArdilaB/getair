@@ -3,6 +3,7 @@ import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
+import { registerServiceWorker } from '../src/lib'
 import { Providers } from '../src/providers'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -12,6 +13,8 @@ export default function RootLayout() {
     useEffect(() => {
         // Hide splash screen after app loads
         SplashScreen.hideAsync()
+        // Register service worker for PWA support (web only)
+        registerServiceWorker()
     }, [])
 
     return (

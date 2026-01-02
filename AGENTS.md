@@ -1,6 +1,15 @@
 # AGENTS.md - AI Agent Onboarding Guide
 
-This document provides comprehensive context for AI agents working with the Ignite codebase. It serves as the primary reference for understanding the architecture, patterns, and conventions used throughout this monorepo template.
+This document provides comprehensive context for AI agents working with the Air codebase. It serves as the primary reference for understanding the architecture, patterns, and conventions used throughout this budget tracking application.
+
+## About Air
+
+Air is a personal budget tracking application designed to help users understand where their money goes without judgment. Key features include:
+
+- **Easy Expense Tracking**: Simple, frictionless way to log and categorize expenses
+- **Spending Insights**: Clear visualizations of spending patterns
+- **Financial Advice**: Curated tips from people who have successfully managed their finances
+- **Non-Judgmental Approach**: Empowers users with awareness, not guilt
 
 ## Quick Reference
 
@@ -29,10 +38,11 @@ This document provides comprehensive context for AI agents working with the Igni
 
 ## Project Overview
 
-Ignite is a **monorepo template** for building full-stack web applications. It provides:
+Air is a **budget tracking application** built as a full-stack monorepo. It provides:
 
 - **Type-safe API**: tRPC 11 for end-to-end type safety
 - **Modern React**: React 19 with Vite and TailwindCSS 4
+- **Mobile App**: React Native with Expo for iOS and Android
 - **Robust Backend**: Hono web framework with Node.js
 - **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: Better Auth with email/password and OAuth
@@ -116,7 +126,7 @@ This pattern enables:
 ### Directory Layout
 
 ```
-ignite/
+air/
 ├── apps/
 │   ├── web/                    # React frontend
 │   │   ├── src/
@@ -130,6 +140,11 @@ ignite/
 │   │   │   ├── screens/        # Page components
 │   │   │   └── hooks/          # Custom hooks
 │   │   └── vite.config.ts
+│   │
+│   ├── mobile/                 # React Native app (Expo)
+│   │   ├── app/                # Expo Router screens
+│   │   └── src/
+│   │       └── providers/      # Auth, API providers
 │   │
 │   └── server/                 # Node.js backend
 │       ├── src/
@@ -162,24 +177,29 @@ ignite/
 │   │       ├── utils.ts        # createId() helper
 │   │       └── schema/         # Drizzle schemas
 │   │           ├── index.ts    # Main schema exports
-│   │           └── auth.ts     # Better Auth tables
+│   │           ├── auth.ts     # Better Auth tables
+│   │           ├── expenses.ts # Expense tracking tables
+│   │           └── tips.ts     # Financial tips tables
 │   │
 │   ├── auth/                   # Authentication
 │   │   └── src/
 │   │       ├── models/         # Type definitions
 │   │       ├── services/       # Auth service factory
-│   │       └── react/          # React auth client
+│   │       ├── react/          # React auth client
+│   │       └── expo/           # Expo auth client
 │   │
 │   ├── components/             # Shared UI components
 │   └── lib/                    # Shared utilities
 │
 └── packages/                   # Feature packages
-    └── posts/                  # Example feature
-        └── src/
-            ├── router.ts       # tRPC router
-            ├── index.ts        # Exports
-            └── tests/
-                └── router.test.ts
+    ├── expenses/               # Expense tracking
+    │   └── src/
+    │       ├── router.ts       # tRPC router
+    │       ├── index.ts        # Exports
+    │       └── tests/
+    ├── budgets/                # Budget management
+    ├── insights/               # Spending analytics
+    └── tips/                   # Financial advice
 ```
 
 ### Package Naming Convention
@@ -882,7 +902,7 @@ Example: feat(posts): add create post endpoint
 
 ```env
 # Required
-DATABASE_URL=postgresql://user:password@localhost:5432/ignite
+DATABASE_URL=postgresql://user:password@localhost:5432/air
 
 # Required for client
 CLIENT_URL=http://localhost:5173

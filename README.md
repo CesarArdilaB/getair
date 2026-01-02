@@ -1,6 +1,13 @@
-# Ignition
+# Air
 
-This is a template repository for building a web application with a backend server using Vite and React.
+Air is a personal budget tracking application designed to help you understand where your money goes - without judgment. Instead of restricting or guilting you, Air provides a simple way to track expenses and offers practical financial advice gathered from people who have successfully put their money to work.
+
+## Features
+
+- **Easy Expense Tracking**: Log and categorize your expenses with minimal friction
+- **Spending Insights**: Clear visualizations showing where your money goes
+- **Financial Tips**: Curated advice from real people who've mastered their finances
+- **Non-Judgmental Approach**: Track your spending without guilt or restrictions
 
 ## Structure
 
@@ -8,6 +15,7 @@ The project is organized into `apps`, `shared`, and `packages` directories to pr
 
 - **`apps/`**: Contains the primary applications.
     - `web/`: The React frontend application, powered by Vite.
+    - `mobile/`: The React Native mobile app, powered by Expo.
     - `server/`: The Node.js backend server.
 - **`shared/`**: Houses code shared across different parts of the application, particularly between the frontend and backend.
     - `lib/`: A collection of shared library code, common utilities, and helper functions.
@@ -18,10 +26,10 @@ The project is organized into `apps`, `shared`, and `packages` directories to pr
     - `database/`: Sets up the database, including connection configurations and SQL schema definitions.
     - `auth/`: Contains authentication-related logic, such session handling, which can be shared between the frontend and backend.
 - **`packages/`**: Dedicated to encapsulating specific business logic or features as self-contained modules. These packages define their own tRPC procedures by extending from `shared/api-helpers` and interact with core services (like context and database).
-    - `platform_feature_a/`: A package containing specific business logic or features for "Feature A," including its tRPC procedures.
-    - `platform_feature_b/`: Another package containing business logic or features for "Feature B," including its tRPC procedures.
-    - `feature_a_schema/`: Database schema definitions specific to "Feature A."
-    - `feature_b_schema/`: Database schema definitions specific to "Feature B."
+    - `expenses/`: Expense tracking and categorization logic.
+    - `budgets/`: Budget management and tracking.
+    - `insights/`: Spending analytics and visualizations.
+    - `tips/`: Financial advice and tips management.
 
 ## Dependencies
 
@@ -33,6 +41,7 @@ The `shared/context` module is responsible for managing common context and I/O d
 graph LR
     subgraph Apps
         web(apps/web)
+        mobile(apps/mobile)
         server(apps/server)
     end
 
@@ -47,15 +56,18 @@ graph LR
     end
 
     subgraph Packages
-        feature_a(packages/platform_feature_a)
-        feature_b(packages/platform_feature_b)
-        feature_a_schema(packages/feature_a_schema)
-        feature_b_schema(packages/feature_b_schema)
+        expenses(packages/expenses)
+        budgets(packages/budgets)
+        insights(packages/insights)
+        tips(packages/tips)
     end
 
     web --> lib
     web --> components
     web --> api
+
+    mobile --> api
+    mobile --> auth
 
     components --> lib
 
@@ -68,8 +80,10 @@ graph LR
 
     api --> api_helpers
     api --> context
-    api --> feature_a
-    api --> feature_b
+    api --> expenses
+    api --> budgets
+    api --> insights
+    api --> tips
 
     auth --> database
 
@@ -77,18 +91,22 @@ graph LR
     context --> auth
 
     database --> lib
-    database --> feature_a_schema
-    database --> feature_b_schema
 
-    feature_a --> context
-    feature_a --> feature_a_schema
-    feature_a --> api_helpers
-    feature_a --> lib
+    expenses --> context
+    expenses --> api_helpers
+    expenses --> lib
 
-    feature_b --> context
-    feature_b --> feature_b_schema
-    feature_b --> api_helpers
-    feature_b --> lib
+    budgets --> context
+    budgets --> api_helpers
+    budgets --> lib
+
+    insights --> context
+    insights --> api_helpers
+    insights --> lib
+
+    tips --> context
+    tips --> api_helpers
+    tips --> lib
 ```
 
 ## How to develop
@@ -103,25 +121,29 @@ To add a feature, you must first create a new package under the `packages` direc
 You can create a tRPC router. To do this, you need to add the dependency `@shared/api-helpers` and create a router.
 
 ```ts
-// packages/my_feature/src/index.ts
+// packages/expenses/src/index.ts
 
 import { protectedProcedure, router } from '@shared/api-helpers'
 import { schema } from '@shared/database'
 import z from 'zod'
 
-export const posts = router({
+export const expenses = router({
     create: protectedProcedure
         .input(
             z.object({
-                title: z.string().min(1, 'Title is required'),
-                content: z.string().min(1, 'Content is required'),
+                amount: z.number().positive('Amount must be positive'),
+                category: z.string().min(1, 'Category is required'),
+                description: z.string().optional(),
+                date: z.date().optional(),
             })
         )
         .mutation(async ({ ctx, input }) => {
-            await ctx.db.insert(schema.posts).values({
-                title: input.title,
-                content: input.content,
-                authorId: ctx.session.user.id,
+            await ctx.db.insert(schema.expenses).values({
+                amount: input.amount,
+                category: input.category,
+                description: input.description,
+                date: input.date ?? new Date(),
+                userId: ctx.session.user.id,
             })
         }),
 })
@@ -131,10 +153,10 @@ Then you must import this router on the `shared/api` module, which is responsibl
 
 ```ts
 // shared/api/src/server/root.ts
-import { posts } from '@packages/posts'
+import { expenses } from '@packages/expenses'
 
 export const appRouter = router({
-    posts,
+    expenses,
 })
 ```
 

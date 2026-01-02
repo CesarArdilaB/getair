@@ -1,6 +1,16 @@
 # CLAUDE.md
 
-This document provides guidance for AI assistants working with the Ignite codebase.
+This document provides guidance for AI assistants working with the Air codebase.
+
+## About Air
+
+Air is a personal budget tracking application designed to help users understand where their money goes without judgment. The app provides:
+
+- **Easy expense tracking**: Simple, non-judgmental way to log and categorize expenses
+- **Spending insights**: Clear visualizations of where money is being spent
+- **Financial advice**: Curated tips and strategies from people who have successfully put their money to work
+
+The philosophy is to empower users with awareness and practical advice rather than guilt or restrictions.
 
 ## Additional Resources
 
@@ -53,7 +63,7 @@ Use these commands to quickly scaffold common tasks:
 
 ## Project Overview
 
-Ignite is a monorepo template for building web and mobile applications with React frontend, React Native mobile app, and Node.js backend. It uses tRPC for type-safe API communication, Drizzle ORM for database access, and follows a modular architecture with dependency injection.
+Air is a budget tracking application built as a monorepo with React frontend, React Native mobile app, and Node.js backend. It uses tRPC for type-safe API communication, Drizzle ORM for database access, and follows a modular architecture with dependency injection.
 
 ## Tech Stack
 
@@ -69,7 +79,7 @@ Ignite is a monorepo template for building web and mobile applications with Reac
 ## Repository Structure
 
 ```
-ignite/
+air/
 ├── apps/
 │   ├── web/          # React frontend (Vite) - customer-facing
 │   ├── cms/          # CMS admin panel (Vite) - content management
@@ -85,7 +95,7 @@ ignite/
 │   └── lib/          # Utility functions
 ├── packages/         # Business logic features
 │   ├── cms/          # CMS access control and admin procedures
-│   └── posts/        # Example feature package
+│   └── posts/        # Example feature package (to be replaced with budget features)
 ├── biome.json        # Linting/formatting config
 ├── tsconfig.json     # TypeScript project references
 └── pnpm-workspace.yaml
@@ -295,7 +305,7 @@ Run `pnpm format` before committing.
 Create `.env` in project root (copied from `apps/server/.env.example`):
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/ignition
+DATABASE_URL=postgresql://user:password@localhost:5432/air
 CLIENT_URL=http://localhost:5173
 ```
 

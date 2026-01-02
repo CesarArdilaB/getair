@@ -1,6 +1,6 @@
-# Contributing to \[Your Project Name\]
+# Contributing to Air
 
-Welcome! This document outlines the development guidelines and conventions for \[Your Project Name\]. These rules ensure consistency, maintainability, and collaboration across the team and AI agents.
+Welcome! This document outlines the development guidelines and conventions for Air - a personal budget tracking application that helps users understand where their money goes without judgment. These rules ensure consistency, maintainability, and collaboration across the team and AI agents.
 
 ## Development Setup
 
@@ -48,6 +48,7 @@ Follow the established structure:
 - Export tRPC routers, services, and types
 - Use `shared/api-helpers` for base procedures
 - Keep business logic encapsulated
+- Core packages for Air: `expenses`, `budgets`, `insights`, `tips`
 
 ### File Structure Convention
 
@@ -191,8 +192,9 @@ type(scope): description
 
 **Examples**:
 ```
-feat(posts): add create post endpoint
+feat(expenses): add create expense endpoint
 fix(auth): resolve session validation bug
+feat(insights): add monthly spending chart
 docs(api): update tRPC procedure documentation
 ```
 

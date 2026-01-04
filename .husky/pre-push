@@ -1,0 +1,3 @@
+# Run tests before pushing
+echo "Running tests before push..."
+pnpm test

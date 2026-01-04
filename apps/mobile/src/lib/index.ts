@@ -1,4 +1,4 @@
-export * from './utils'
-export * from './platform'
 export * from './alert'
+export * from './platform'
 export * from './service-worker'
+export * from './utils'

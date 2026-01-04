@@ -20,7 +20,9 @@ export function showConfirm(
     onCancel?: () => void,
 ) {
     if (Platform.OS === 'web') {
-        const result = window.confirm(message ? `${title}\n\n${message}` : title)
+        const result = window.confirm(
+            message ? `${title}\n\n${message}` : title,
+        )
         if (result) {
             onConfirm?.()
         } else {

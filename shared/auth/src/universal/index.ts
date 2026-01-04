@@ -26,6 +26,7 @@ export function createUniversalAuthClient(options: UniversalAuthClientOptions) {
             expoClient({
                 scheme: options.scheme,
                 storagePrefix: options.storagePrefix ?? 'air',
+                // biome-ignore lint/suspicious/noExplicitAny: expo-secure-store types differ from our StorageAdapter
                 storage: options.storage as any,
             }),
         ],

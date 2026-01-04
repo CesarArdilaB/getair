@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
             setIsReady(true)
         }
-        initAuth()
+        void initAuth()
     }, [])
 
     if (!isReady || !authClient) {
@@ -56,7 +56,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <AuthContext.Provider value={authClient}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={authClient}>
+            {children}
+        </AuthContext.Provider>
     )
 }
 
@@ -68,5 +70,5 @@ export function useAuth() {
     return context
 }
 
-// Re-export the auth client for direct usage
-export { authClient }
+// Re-export the auth client type for direct usage
+export type { UniversalAuthClient } from '@shared/auth/universal'

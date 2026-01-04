@@ -6,7 +6,8 @@
         "db:push": "dotenv -- pnpm --filter @shared/database db:push",
         "test": "dotenv -- pnpm run -r test",
         "format": "pnpm dlx @biomejs/biome check --write --unsafe",
-        "lint": "tsc -b"
+        "lint": "tsc -b",
+        "prepare": "husky"
     },
     "workspaces": [
         "apps/*",
@@ -17,6 +18,7 @@
         "@biomejs/biome": "2.2.4",
         "concurrently": "^9.2.1",
         "dotenv-cli": "^10.0.0",
+        "husky": "^9.1.7",
         "typescript": "^5.9.2"
     }
 }

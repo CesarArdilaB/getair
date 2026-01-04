@@ -361,6 +361,25 @@ fly ssh console       # SSH into container
 fly secrets list      # List configured secrets
 ```
 
+### CI/CD Pipeline
+
+**GitHub Actions** handles automated deployment:
+
+| Workflow | Trigger | Action |
+|----------|---------|--------|
+| `fly-deploy.yml` | Push to `main` | Deploy to production |
+| `fly-preview.yml` | Pull Request | Create preview app, cleanup on close |
+
+**Husky** runs local checks:
+
+| Hook | When | Action |
+|------|------|--------|
+| `pre-commit` | Before commit | Format code, type-check |
+| `pre-push` | Before push | Run all tests |
+
+**Required GitHub Secrets:**
+- `FLY_API_TOKEN` - Get from `fly tokens create deploy`
+
 ## Important Files
 
 | File | Purpose |

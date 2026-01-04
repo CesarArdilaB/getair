@@ -13,7 +13,7 @@
         "./services/testing": "./src/services/testing.ts"
     },
     "scripts": {
-        "test": "tsx --test src/tests/**/*.test.ts"
+        "test": "node --import tsx --test src/tests/*.test.ts"
     },
     "dependencies": {
         "@shared/database": "workspace:*",

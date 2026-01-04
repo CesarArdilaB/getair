@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "dev": "NODE_ENV=development node --import=tsx --watch src/main.ts",
-        "test": "NODE_ENV=production tsx --experimental-test-coverage --test **/*.test.ts",
+        "test": "NODE_ENV=production node --import tsx --experimental-test-coverage --test src/tests/*.test.ts",
         "build": "esbuild src/main.ts --bundle --format=cjs --platform=node --target=node22 --outfile=dist/main.cjs"
     },
     "devDependencies": {

@@ -4,7 +4,7 @@ import { createDBClient, schema } from '@shared/database'
 import { eq } from 'drizzle-orm'
 import { createTestingAuthService } from '../services/testing'
 
-const db = createDBClient()
+const db = await createDBClient()
 
 describe('Testing Auth Service', () => {
     test('createTestingAuthService creates test user', async () => {

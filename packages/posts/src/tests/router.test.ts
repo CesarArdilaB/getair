@@ -7,6 +7,9 @@ import { posts } from '../router'
 
 const context = await createTestContext()
 
+// Create a mock request for testing
+const mockReq = new Request('http://localhost/api/trpc')
+
 describe('Posts Router', () => {
     const createdPostIds: string[] = []
 
@@ -15,20 +18,8 @@ describe('Posts Router', () => {
         await context.db.delete(schema.posts)
 
         const caller = posts.createCaller({
-            db: context.db,
-            session: {
-                session: {
-                    id: 'S0001',
-                    userId: 'U0001',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-                user: {
-                    id: 'U0001',
-                    email: 'johndoe@example.com',
-                    name: 'John Doe',
-                },
-            },
+            ...context,
+            req: mockReq,
         })
 
         const result = await caller.list()
@@ -39,20 +30,8 @@ describe('Posts Router', () => {
 
     test('create inserts post into database', async () => {
         const caller = posts.createCaller({
-            db: context.db,
-            session: {
-                session: {
-                    id: 'S0001',
-                    userId: 'U0001',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-                user: {
-                    id: 'U0001',
-                    email: 'johndoe@example.com',
-                    name: 'John Doe',
-                },
-            },
+            ...context,
+            req: mockReq,
         })
 
         const result = await caller.create({
@@ -77,20 +56,8 @@ describe('Posts Router', () => {
 
     test('list returns created posts with correct fields', async () => {
         const caller = posts.createCaller({
-            db: context.db,
-            session: {
-                session: {
-                    id: 'S0001',
-                    userId: 'U0001',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-                user: {
-                    id: 'U0001',
-                    email: 'johndoe@example.com',
-                    name: 'John Doe',
-                },
-            },
+            ...context,
+            req: mockReq,
         })
 
         const result = await caller.list()

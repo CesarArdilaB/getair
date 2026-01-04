@@ -10,8 +10,11 @@ export async function createTestingAuthService(
             email: 'johndoe@example.com',
             id: 'U0001',
             name: 'John Doe',
+            emailVerified: false,
+            createdAt: new Date(),
+            updatedAt: new Date(),
         })
-        .onConflictDoNothing()
+        .onConflictDoNothing({ target: schema.user.id })
 
     const session: Session = {
         session: {
@@ -31,6 +34,6 @@ export async function createTestingAuthService(
         handler: () => {
             throw new Error('No implement')
         },
-        getSession: async () => session,
+        getSession: async (_headers: Headers) => session,
     }
 }

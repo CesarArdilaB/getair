@@ -20,6 +20,15 @@ export function createDrizzle(client: Sql): DBType {
     return drizzle(client, { schema })
 }
 
+/**
+ * Convenience function to create a database client with drizzle ORM.
+ * Combines createDatabaseClient and createDrizzle into a single call.
+ */
+export async function createDBClient(): Promise<DBType> {
+    const client = await createDatabaseClient()
+    return createDrizzle(client)
+}
+
 export type DBType = PostgresJsDatabase<typeof schema> & { $client: Sql }
 export type TXType = PgTransaction<
     PostgresJsQueryResultHKT,

@@ -8,6 +8,9 @@
     },
     "scripts": {
         "db:push": "drizzle-kit push",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "tsx src/migrate.ts",
+        "db:studio": "drizzle-kit studio",
         "test": "tsx --test src/tests/**/*.test.ts"
     },
     "dependencies": {

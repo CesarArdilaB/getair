@@ -25,6 +25,36 @@ dist-ssr
 *.sw?
 
 .env
+.env.*
 
 # Typescript
 *.tsbuildinfo
+
+# Fly.io
+fly.toml
+
+# Git
+.git
+.gitignore
+
+# Expo/React Native (not needed for server build)
+apps/mobile/.expo
+apps/mobile/android
+apps/mobile/ios
+apps/mobile/*.jks
+apps/mobile/*.p8
+apps/mobile/*.p12
+apps/mobile/*.mobileprovision
+
+# Testing
+coverage
+*.test.ts
+**/*.test.ts
+
+# Documentation
+*.md
+!README.md
+docs
+
+# Claude
+.claude

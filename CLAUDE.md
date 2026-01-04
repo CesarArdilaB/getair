@@ -134,6 +134,13 @@ pnpm build:production # Build production release
 # Code Quality
 pnpm format           # Format code with Biome
 pnpm lint             # Type-check with TypeScript
+
+# Deployment (Fly.io)
+fly launch            # First-time setup (creates app)
+fly deploy            # Deploy to production
+fly secrets set DATABASE_URL=xxx CLIENT_URL=xxx  # Set secrets
+fly logs              # View production logs
+fly ssh console       # SSH into production container
 ```
 
 ## Package Naming Convention
@@ -307,6 +314,51 @@ Create `.env` in project root (copied from `apps/server/.env.example`):
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/air
 CLIENT_URL=http://localhost:5173
+```
+
+## Deployment (Fly.io)
+
+The app is deployed to Fly.io using Docker. Configuration is in `fly.toml` and `Dockerfile`.
+
+### First-Time Setup
+
+```bash
+# Install Fly CLI
+curl -L https://fly.io/install.sh | sh
+
+# Login to Fly
+fly auth login
+
+# Create the app (one-time)
+fly launch --no-deploy
+
+# Set required secrets
+fly secrets set DATABASE_URL="postgresql://..." CLIENT_URL="https://air-budget.fly.dev"
+
+# Optional: Set Google OAuth secrets
+fly secrets set GOOGLE_CLIENT_ID="..." GOOGLE_CLIENT_SECRET="..."
+
+# Deploy
+fly deploy
+```
+
+### Required Secrets
+
+| Secret | Description |
+|--------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string (use Neon, Supabase, etc.) |
+| `CLIENT_URL` | Production URL (e.g., `https://air-budget.fly.dev`) |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID (optional) |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth secret (optional) |
+
+### Useful Commands
+
+```bash
+fly deploy            # Deploy latest changes
+fly logs              # View production logs
+fly status            # Check app status
+fly ssh console       # SSH into container
+fly secrets list      # List configured secrets
 ```
 
 ## Important Files
